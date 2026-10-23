@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teaching | Biophysics &amp; Biofluids Lab | IIT Kharagpur</title>
+<meta name="description" content="Biophysics & Biofluids Lab at the School of Medical Science and Technology, IIT Kharagpur. Cell and tissue mechanics, collective cell behavior, active fluids, and AI for medical data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f7f7;
+  --paper-2:#e6f5d0;
+  --ink:#1E2A14;
+  --ink-soft:#56634A;
+  --hema:#4d9221;
+  --eosin:#a1d76a;
+  --eosin-deep:#4d9221;
+  --rule:#D6E6C2;
+  --cell:#a1d76a;
+  --membrane:#4d9221;
+  --nucleus:#2F5E12;
+  --focus:#4d9221;
+  --link:#3F7A1A;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121A0E; --paper-2:#1A2714; --ink:#EEF5E6; --ink-soft:#AAB99C;
+    --hema:#a1d76a; --eosin:#a1d76a; --eosin-deep:#B9E38C; --rule:#2C3D22;
+    --cell:#2F4C1C; --membrane:#a1d76a; --nucleus:#e6f5d0; --focus:#a1d76a; --link:#B9E38C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121A0E; --paper-2:#1A2714; --ink:#EEF5E6; --ink-soft:#AAB99C;
+  --hema:#a1d76a; --eosin:#a1d76a; --eosin-deep:#B9E38C; --rule:#2C3D22;
+  --cell:#2F4C1C; --membrane:#a1d76a; --nucleus:#e6f5d0; --focus:#a1d76a; --link:#B9E38C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 96px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--link);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--hema)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.5rem)}
+
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:60px}
+.brand{font-family:var(--sans);font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.55rem;white-space:nowrap}
+.brand svg{flex:none}
+.nav ul{list-style:none;display:flex;gap:.25rem;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav ul a{font-family:var(--sans);font-size:.92rem;color:var(--ink-soft);text-decoration:none;padding:.4rem .65rem;border-radius:999px;white-space:nowrap}
+.nav ul a:hover,.nav ul a.on{color:var(--ink);background:var(--paper-2)}
+.theme-btn{flex:none;border:1px solid var(--rule);background:transparent;color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem}
+@media (max-width:820px){.nav .wrap{flex-wrap:wrap;height:auto;row-gap:.1rem;padding-top:.55rem;padding-bottom:.35rem}.nav ul{order:3;width:100%;margin:0 -.4rem}.theme-btn{width:32px;height:32px}}
+
+/* Hero: four full-bleed films, title tile below */
+.page[hidden]{display:none}
+.hero{padding:0 0 clamp(2.5rem,6vw,4rem);border-bottom:1px solid var(--rule)}
+.films{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0}
+.film{position:relative;margin:0}
+.film canvas{display:block;width:100%;aspect-ratio:1/1;background:var(--paper-2)}
+#tissue{cursor:crosshair;touch-action:pan-y}
+.film figcaption{font-family:var(--sans);font-size:.86rem;color:var(--ink-soft);line-height:1.4;padding:.8rem clamp(.8rem,1.6vw,1.4rem) 0;max-width:40ch}
+.film figcaption strong{display:block;color:var(--ink);font-weight:600;font-size:.95rem;margin-bottom:.15rem}
+.tag{position:absolute;left:.7rem;top:.7rem;font-family:var(--sans);font-size:.76rem;color:var(--ink);background:color-mix(in srgb,var(--paper) 82%,transparent);padding:.25rem .6rem;border-radius:999px;pointer-events:none}
+.film-ctrl{display:flex;justify-content:flex-end;margin-top:.9rem}
+.film-ctrl button{font-family:var(--sans);font-size:.85rem;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--rule);border-radius:999px;padding:.4rem .9rem;cursor:pointer}
+.film-ctrl button:hover{border-color:var(--ink)}
+.hero-card{margin-top:clamp(1.4rem,3vw,2.2rem);background:var(--paper);border:1px solid var(--rule);border-radius:4px 4px 28px 28px;padding:clamp(1.5rem,4vw,2.8rem);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(1.2rem,4vw,3.5rem);align-items:end}
+.hero h1{font-family:var(--sans);font-weight:800;font-size:clamp(2.4rem,6vw,4.6rem);line-height:.95;letter-spacing:-.035em;margin:0}
+.hero h1 .amp{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--eosin-deep)}
+.affil{font-family:var(--sans);color:var(--ink-soft);margin:1rem 0 0;font-size:1rem;line-height:1.4}
+.hero p.lede{margin:0 0 1.4rem;max-width:52ch}
+.btns{display:flex;flex-wrap:wrap;gap:.6rem}
+.btn{font-family:var(--sans);font-weight:600;font-size:.95rem;text-decoration:none;padding:.65rem 1.1rem;border-radius:999px;border:1.5px solid var(--ink);color:var(--ink)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--hema);border-color:var(--hema);color:#fff}
+@media (max-width:900px){
+  .films{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:1.2rem}
+  .hero-card{grid-template-columns:1fr;border-radius:4px 4px 22px 22px}
+}
+@media (max-width:480px){.film figcaption{font-size:.8rem}.film figcaption strong{font-size:.88rem}}
+
+section.block{padding:clamp(3.5rem,8vw,6rem) 0;border-bottom:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr);gap:.4rem;margin-bottom:2.2rem}
+h2{font-family:var(--sans);font-weight:800;font-size:clamp(2rem,4.5vw,3rem);letter-spacing:-.03em;line-height:1;margin:0}
+.sec-head p{margin:.6rem 0 0;color:var(--ink-soft);max-width:62ch}
+h3{font-family:var(--sans);font-weight:600;font-size:1.25rem;letter-spacing:-.01em;line-height:1.25;margin:0 0 .4rem}
+
+.themes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--rule)}
+.theme{padding:1.8rem 1.8rem 1.8rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:64px minmax(0,1fr);gap:1.1rem}
+.theme:nth-child(odd){border-right:1px solid var(--rule)}
+.theme:nth-child(even){padding-left:1.8rem;padding-right:0}
+.theme p{margin:0;color:var(--ink-soft)}
+.glyph{width:64px;height:64px}
+@media (max-width:760px){.themes{grid-template-columns:1fr}.theme,.theme:nth-child(even){padding:1.5rem 0;border-right:0}}
+.research-intro{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(1.8rem,5vw,4rem);align-items:center;margin:0 0 3rem}
+.research-intro .intro-long{margin:0}
+.research-fig{margin:0;justify-self:end;width:100%;max-width:400px}
+.research-fig img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:50% 50% 50% 8px;box-shadow:0 0 0 1px var(--rule),0 18px 40px -24px color-mix(in srgb,var(--ink) 45%,transparent)}
+@media (max-width:820px){.research-intro{grid-template-columns:1fr}.research-fig{justify-self:start;max-width:320px}}
+.intro-long{max-width:68ch;font-size:1.12rem;margin:0 0 2.6rem}
+
+.pi{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1.6rem;align-items:center;padding:1.6rem;background:var(--paper-2);border-radius:4px 28px 4px 4px;margin-bottom:2.2rem}
+.mono{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-family:var(--sans);font-weight:800;font-size:1.9rem;color:#fff;background:var(--hema)}
+.pi .role{margin:0;color:var(--ink-soft);font-family:var(--sans);font-size:.98rem;line-height:1.45}
+.pi .links{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:.7rem;font-family:var(--sans);font-size:.95rem}
+@media (max-width:560px){.pi{grid-template-columns:1fr}.mono{width:72px;height:72px;font-size:1.4rem}}
+.members{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.6rem 2rem;margin:0;padding:0;list-style:none}
+.member{display:grid;grid-template-columns:64px minmax(0,1fr);gap:.9rem;align-items:start}
+.member .mono{width:52px;height:52px;font-size:1rem;background:var(--eosin-deep)}
+.avatar{display:block;flex:none}
+.avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;background:var(--paper-2)}
+.avatar-pi{width:132px;height:132px}
+.avatar-pi img{box-shadow:0 0 0 4px var(--paper),0 0 0 5px var(--rule)}
+.avatar-pi .mono{width:132px;height:132px}
+.member .avatar{width:64px;height:64px}
+.member .avatar .mono{width:64px;height:64px}
+@media (max-width:560px){.avatar-pi,.avatar-pi .mono{width:96px;height:96px}}
+
+.member h3{font-size:1.06rem;margin:0}
+.member p{margin:.15rem 0 0;font-size:.93rem;line-height:1.45;color:var(--ink-soft);font-family:var(--sans)}
+.member a.mail{font-size:.88rem;word-break:break-all}
+.past{margin-top:2.6rem;font-family:var(--sans);color:var(--ink-soft);font-size:.98rem}
+.past strong{color:var(--ink);font-weight:600}
+
+.pub-tools{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;justify-content:space-between;margin-bottom:1.6rem}
+.search{flex:1 1 280px;max-width:420px;position:relative}
+.search input{width:100%;font:inherit;font-family:var(--sans);font-size:.98rem;padding:.7rem 1rem .7rem 2.4rem;border-radius:999px;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink)}
+.search input:focus{border-color:var(--hema);outline:none}
+.search svg{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--ink-soft)}
+.pub-count{font-family:var(--sans);font-size:.92rem;color:var(--ink-soft)}
+.year-group{display:grid;grid-template-columns:120px minmax(0,1fr);gap:1.5rem;padding:1.4rem 0;border-top:1px solid var(--rule)}
+.year{font-family:var(--sans);font-weight:800;font-size:2.2rem;letter-spacing:-.04em;line-height:1;color:var(--eosin);position:sticky;top:calc(env(safe-area-inset-top,0px) + 80px);align-self:start}
+.pubs{list-style:none;margin:0;padding:0;display:grid;gap:1.35rem}
+.pub{display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:.6rem}
+.pub .n{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);padding-top:.3rem;font-variant-numeric:tabular-nums}
+.pub .t{font-weight:600;font-size:1.08rem;line-height:1.4;margin:0}
+.pub .t a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--eosin),var(--eosin));background-size:0 1.5px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .25s}
+.pub .t a:hover{background-size:100% 1.5px}
+.pub .au{margin:.2rem 0 0;font-size:.96rem;color:var(--ink-soft);line-height:1.5}
+.pub .au b{color:var(--ink);font-weight:600}
+.pub .j{margin:.15rem 0 0;font-family:var(--sans);font-size:.9rem;color:var(--hema)}
+.pub .j i{font-style:italic;font-family:var(--serif)}
+.empty{font-family:var(--sans);color:var(--ink-soft);padding:1.5rem 0}
+@media (max-width:640px){.year-group{grid-template-columns:1fr;gap:.6rem}.year{position:static;font-size:1.8rem}}
+
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem}
+.term{border-left:3px solid var(--eosin);padding:.2rem 0 .2rem 1.1rem}
+.term h3{font-size:1.08rem}
+.term ul{margin:0;padding:0;list-style:none;font-size:.97rem}
+.term li{margin:.35rem 0;line-height:1.4}
+.term code{font-family:var(--sans);font-size:.85rem;color:var(--ink-soft);display:block}
+.term.past-t{border-left-color:var(--rule)}
+
+.join-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(2rem,5vw,4rem)}
+.join-grid p{max-width:62ch;margin:0 0 1.1rem}
+.paths{display:grid;gap:1rem;margin-top:1.6rem}
+.path{background:var(--paper-2);border-radius:4px 20px 4px 4px;padding:1.2rem 1.3rem}
+.path p{margin:0;font-size:.98rem}
+.fund{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}
+.fund li{font-family:var(--sans);padding:1rem 1.2rem;border:1px solid var(--rule);border-radius:4px}
+.fund li span{display:block;font-size:.88rem;color:var(--ink-soft)}
+@media (max-width:820px){.join-grid{grid-template-columns:1fr}}
+
+footer{background:var(--ink);color:var(--paper);padding:clamp(3rem,7vw,5rem) 0 2rem}
+footer h2{color:var(--paper)}
+footer a{color:var(--eosin)}
+footer a:hover{color:#fff}
+.foot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;margin-top:2rem;font-family:var(--sans);font-size:.98rem;line-height:1.55}
+.foot-grid h3{font-size:.95rem;color:color-mix(in srgb,var(--paper) 70%,transparent);font-weight:600;margin-bottom:.5rem}
+.foot-grid p{margin:0}
+.copy{margin-top:3rem;padding-top:1.4rem;border-top:1px solid color-mix(in srgb,var(--paper) 18%,transparent);font-family:var(--sans);font-size:.85rem;color:color-mix(in srgb,var(--paper) 60%,transparent)}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) footer{background:#0B1208;color:var(--ink)} :root:not([data-theme="light"]) footer h2{color:var(--ink)}}
+:root[data-theme="dark"] footer{background:#0B1208;color:var(--ink)}
+:root[data-theme="dark"] footer h2{color:var(--ink)}
+/* Teaching: one column, subject with its semesters below */
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 3rem;margin-top:.4rem}
+@media (max-width:760px){.courses{grid-template-columns:1fr}}
+.course{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:1.1rem;row-gap:.4rem;align-items:start;align-content:start}
+.course::before{content:"";grid-row:1 / span 2;justify-self:center;width:10px;height:10px;margin-top:.55rem;border-radius:50%;background:var(--eosin)}
+.course h3{grid-column:2;font-size:1.28rem;line-height:1.3;margin:0;letter-spacing:-.01em}
+.course .sems,.course .sub{grid-column:2}
+.sems{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
+.sems li{font-family:var(--sans);font-size:.84rem;font-weight:500;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:.22rem .75rem}
+.course .sub{margin:0;font-size:1rem;color:var(--ink-soft);line-height:1.5}
+.earlier-h{margin:3.2rem 0 1rem;font-size:1.35rem}
+.earlier{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border-top:1px solid var(--rule)}
+.earlier>div{padding:1.1rem 1.4rem 1.1rem 0;border-bottom:1px solid var(--rule)}
+.earlier p{margin:0;font-size:.97rem;color:var(--ink-soft);line-height:1.5}
+.earlier .inst{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:1.02rem}
+.earlier .role{font-family:var(--sans);font-size:.88rem;margin:.1rem 0 .3rem}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Biophysics and Biofluids Lab, home">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><polygon points="13,2 23,7.5 23,18.5 13,24 3,18.5 3,7.5" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="13" cy="13" rx="4" ry="3" fill="var(--eosin)"/></svg>
+      BBL @ SMST
+    </a>
+    <ul id="navlinks">
+      <li><a data-nav="home" href="index.html">Home</a></li>
+      <li><a data-nav="research" href="research.html">Research</a></li>
+      <li><a data-nav="team" href="team.html">Team</a></li>
+      <li><a data-nav="publications" href="publications.html">Publications</a></li>
+      <li><a data-nav="teaching" href="teaching.html">Teaching</a></li>
+      <li><a data-nav="join" href="join.html">Join us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn" aria-label="Switch light or dark theme">◐</button>
+  </div>
+</header>
+
+<script>
+
+function photoFallback(img){
+  if(window.PHOTO_FALLBACK && img.src!==window.PHOTO_FALLBACK){ img.src=window.PHOTO_FALLBACK; return; }
+  const m=document.createElement("span"); m.className="mono"; m.setAttribute("aria-hidden","true"); m.textContent=img.dataset.initials||""; img.replaceWith(m);
+}
+</script>
+<main id="top">
+  <div class="page" data-page="teaching">
+  <section class="block" id="teaching">
+    <div class="wrap">
+      <div class="sec-head"><h2>Teaching</h2><p>Courses taught at the School of Medical Science and Technology, IIT Kharagpur.</p></div>
+      <div class="courses">
+        <article class="course">
+          <h3>Thermodynamics and Transport in Biological Systems</h3>
+          <ul class="sems"><li>Spring 2025–2026</li></ul>
+        </article>
+        <article class="course">
+          <h3>Biological Physics</h3>
+          <ul class="sems"><li>Autumn 2024–2025</li></ul>
+        </article>
+        <article class="course">
+          <h3>Mathematical Methods in Biomedical Engineering</h3>
+          <ul class="sems"><li>Autumn 2024–2025</li></ul>
+        </article>
+        <article class="course">
+          <h3>Molecular Imaging</h3>
+          <ul class="sems"><li>Spring 2025–2026</li></ul>
+        </article>
+        <article class="course">
+          <h3>Introduction to Programming</h3>
+          <ul class="sems"><li>Autumn 2025</li></ul>
+        </article>
+        <article class="course">
+          <h3>Medical Electronics Lab</h3>
+          <ul class="sems"><li>Spring 2025–2026</li></ul>
+        </article>
+      </div>
+
+      <h3 class="earlier-h">Earlier teaching</h3>
+      <div class="earlier">
+        <div><p class="inst">Syracuse University</p><p class="role">Instructor</p><p>Pre-college workshop</p></div>
+        <div><p class="inst">IIT Madras</p><p class="role">Teaching assistant</p><p>Numerical Methods and Programming, Soft Matter Physics, Physics I, Physics Lab I</p></div>
+        <div><p class="inst">IIT Palakkad</p><p class="role">Teaching assistant</p><p>Computational Engineering</p></div>
+      </div>
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <div class="foot-grid">
+      <div><h3>Address</h3><p>Biophysics &amp; Biofluids Lab<br>School of Medical Science and Technology<br>IIT Kharagpur, West Bengal 721302, India</p></div>
+      <div><h3>Reach us</h3><p><a href="mailto:raj@smst.iitkgp.ac.in">raj@smst.iitkgp.ac.in</a><br>Office: <a href="tel:+913222283576">+91 3222 283576</a></p></div>
+      <div><h3>Elsewhere</h3><p><a href="https://scholar.google.com/citations?hl=en&user=SKm3JGsAAAAJ&view_op=list_works&sortby=pubdate">Google Scholar</a><br><a href="https://www.linkedin.com/in/raj-kumar-manna/">LinkedIn</a><br><a href="https://www.iitkgp.ac.in/">IIT Kharagpur</a></p></div>
+    </div>
+    <p class="copy">© 2026 Biophysics &amp; Biofluids Lab, IIT Kharagpur</p>
+  </div>
+</footer>
+
+<script>
+const PI = "Raj Kumar Manna";
+const MEMBERS = [
+  {n:"Anish Das", photo:"images/anish-das.jpg", r:"PhD scholar, jointly with Prof. Santanu Dhara", e:"M.Eng., NITTTR Chandigarh", m:"anishdas10@kgpian.iitkgp.ac.in"},
+  {n:"Priyabrata Patra", photo:"images/priyabrata-patra.jpg", r:"PhD scholar", e:"M.Sc., IIT Hyderabad", m:"priyabrata200125@kgpian.iitkgp.ac.in"},
+  {n:"Payal Panda", photo:"images/payal-panda.jpg", r:"PhD scholar, jointly with Prof. Soumen Das", e:"M.Sc., NIT Rourkela", m:"pandapayal25@kgpian.iitkgp.ac.in"},
+  {n:"Tushar Das", photo:"images/tushar-das.jpg", r:"PhD scholar, jointly with Prof. Debashree Guha Adhya", e:"M.Sc., NIT Rourkela", m:"dastushar.24@kgpian.iitkgp.ac.in"},
+  {n:"Arkapriya Bhattacharyya", photo:"images/arkapriya-bhattacharyya.jpg", r:"PhD scholar, jointly with Prof. Budhaditya Mukherjee", e:"M.Sc., NIT Rourkela", m:""},
+  {n:"Krittika Biswas", photo:"images/krittika-biswas.jpg", r:"PhD scholar, jointly with Prof. Pintu Patra", e:"M.Sc., IACS Kolkata", m:"krittika.biswas001@gmail.com"}
+];
+const TERMS = [
+  {t:"Spring 2026", c:[["MM61204","Thermodynamics and Transport in Biological Systems"],["MM61514","Molecular Imaging"],["MM69320","Medical Electronics Lab"]]},
+  {t:"Autumn 2025", c:[["MM61317","Biological Physics"],["MM61213","Mathematical Methods in Biomedical Engineering"],["MM62201","Introduction to Programming"]]},
+  {t:"Spring 2025", c:[["MM61204","Thermodynamics and Transport in Biological Systems"],["MM61514","Molecular Imaging"],["MM69320","Medical Electronics Lab"]]},
+  {t:"Autumn 2024", c:[["MM61317","Biological Physics"],["MM61213","Mathematical Methods in Biomedical Engineering"]]},
+  {t:"Earlier", past:true, c:[["Syracuse University","Instructor, pre-college workshop"],["IIT Madras","Teaching assistant: Numerical Methods and Programming, Soft Matter Physics, Physics Lab I, Physics I"],["IIT Palakkad","Teaching assistant: Computational Engineering"]]}
+];
+
+const PUBS = [
+ [21,"Dynamical forces drive organ morphology changes during embryonic development","Raj Kumar Manna, Emma M. Retzlaff, Anna Maria Hinman, Yiling Lan, Osama Abdel-Razek, Mike Bates, Heidi Hehnly, Jeffrey D. Amack, M. Lisa Manning","PNAS (in press); bioRxiv",2025,"https://scholar.google.com/citations?view_op=view_citation&hl=en&user=SKm3JGsAAAAJ&sortby=pubdate&citation_for_view=SKm3JGsAAAAJ:M3ejUd6NZC8C"],
+ [20,"Dry polymer model for a string of pushers: Nontrivial scaling of tumbling time with shear rate","Siji S. Saju, Raj Kumar Manna, P. B. Sunil Kumar","Physical Review Research",2024,"https://doi.org/10.1103/PhysRevResearch.6.043126"],
+ [19,"Multifunctionality of two-dimensional sheets actuated by chemical pumps and motors","Oleg E. Shklyaev, Raj Kumar Manna, Anna C. Balazs","MRS Bulletin",2024,"https://link.springer.com/article/10.1557/s43577-024-00787-6"],
+ [18,"Demixing in binary mixtures with differential diffusivity at high density","Erin McCarthy, Raj Kumar Manna, Ojan Damavandi, M. Lisa Manning","Physical Review Letters",2024,"https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.132.098301"],
+ [17,"Autonomous photothermally-driven fluid pumping and particle transport and assembly","Oleg E. Shklyaev, Raj Kumar Manna, Abhrajit Laskar, Joshua E. Kauffman, Benjamin M. Tansi, Ayusman Sen, Anna C. Balazs","Out-of-equilibrium Soft Matter, RSC (book chapter)",2023,"https://books.rsc.org/books/edited-volume/2101/chapter-abstract/7515414/Autonomous-Photothermally-driven-Fluid-Pumping-and?redirectedFrom=fulltext"],
+ [16,"Chemically driven multimodal locomotion of active, flexible sheets","Raj Kumar Manna, Oleg E. Shklyaev, Anna C. Balazs","Langmuir",2023,"https://pubs.acs.org/doi/full/10.1021/acs.langmuir.2c02666"],
+ [15,"Solutal-buoyancy driven intertwining and rotation of patterned elastic sheets","Raj Kumar Manna, Oleg E. Shklyaev, Howard A. Stone, Anna C. Balazs","PNAS Nexus",2022,"https://academic.oup.com/pnasnexus/article/1/2/pgac072/6604387"],
+ [14,"Computer modeling reveals modalities to actuate mutable, active matter","Abhrajit Laskar, Raj Kumar Manna, Oleg E. Shklyaev, Anna C. Balazs","Nature Communications",2022,"https://www.nature.com/articles/s41467-022-30445-x"],
+ [13,"Self-generated convective flows enhance the rates of chemical reactions","Raj Kumar Manna, Kayla Gentile, Oleg E. Shklyaev, Ayusman Sen, Anna C. Balazs","Langmuir",2022,"https://pubs.acs.org/doi/full/10.1021/acs.langmuir.1c02593"],
+ [12,"Harnessing the power of chemically active sheets in solution","Raj Kumar Manna, Abhrajit Laskar, Oleg E. Shklyaev, Anna C. Balazs","Nature Reviews Physics",2021,"https://www.nature.com/articles/s42254-021-00395-2"],
+ [11,"Colloidal assembly and separation under UV-induced convective flows and on inclines","Joshua E. Kauffman, Benjamin M. Tansi, Christopher LaSalle, Raj Kumar Manna, Oleg E. Shklyaev, Anna C. Balazs, Ayusman Sen","ChemNanoMat",2021,"https://aces.onlinelibrary.wiley.com/doi/full/10.1002/cnma.202100082"],
+ [10,"Chemical pumps and flexible sheets spontaneously form self-regulating oscillators in solution","Raj Kumar Manna, Oleg E. Shklyaev, Anna C. Balazs","PNAS",2021,"https://www.pnas.org/doi/abs/10.1073/pnas.2022987118"],
+ [9,"Achieving independent control over surface and bulk fluid flows in microchambers","Benjamin M. Tansi, Raj Kumar Manna, Oleg E. Shklyaev, Matthew L. Peris, Anna C. Balazs, Ayusman Sen","ACS Applied Materials & Interfaces",2021,"https://pubs.acs.org/doi/full/10.1021/acsami.0c21291"],
+ [8,"Chemically controlled shape-morphing of elastic sheets","Raj Kumar Manna, Oleg E. Shklyaev, Howard A. Stone, Anna C. Balazs","Materials Horizons",2020,"https://pubs.rsc.org/en/content/articlehtml/2020/mh/d0mh00730g"],
+ [7,"Modeling the biomimetic self-organization of active objects in fluids","Abhrajit Laskar, Raj Kumar Manna, Oleg E. Shklyaev, Anna C. Balazs","Nano Today",2019,"https://www.sciencedirect.com/science/article/pii/S1748013219305079"],
+ [6,"Light-induced convective segregation of different-sized microparticles","Raj Kumar Manna, Oleg E. Shklyaev, Joshua Kauffman, Benjamin Tansi, Ayusman Sen, Anna C. Balazs","ACS Applied Materials & Interfaces",2019,"https://pubs.acs.org/doi/full/10.1021/acsami.9b03089"],
+ [5,"Emergent topological phenomena in active polymeric fluids","Raj Kumar Manna, P. B. Sunil Kumar","Soft Matter",2018,"https://pubs.rsc.org/en/content/articlehtml/2018/sm/c8sm01981a"],
+ [4,"Linking catalyst-coated isotropic colloids into “active” flexible chains enhances their diffusivity","Bipul Biswas, Raj Kumar Manna, Abhrajit Laskar, P. B. Sunil Kumar, Ronojoy Adhikari, Guruswamy Kumaraswamy","ACS Nano",2017,"https://pubs.acs.org/doi/full/10.1021/acsnano.7b04265"],
+ [3,"Colloidal transport by active filaments","Raj Kumar Manna, P. B. Sunil Kumar, Ronojoy Adhikari","Journal of Chemical Physics",2017,"https://pubs.aip.org/aip/jcp/article/146/2/024901/195366"],
+ [2,"Dynamics of a polyelectrolyte in simple shear flow","Kandiledath Jayasree, Raj Kumar Manna, Debapriya Banerjee, P. B. Sunil Kumar","Journal of Chemical Physics",2013,"https://pubs.aip.org/aip/jcp/article/139/22/224902/193538"],
+ [1,"Excess energy of an ultracold Fermi gas in a trapped geometry","Shyamal Biswas, Debnarayan Jana, Raj Kumar Manna","European Physical Journal D",2012,"https://link.springer.com/article/10.1140/epjd/e2012-30152-y"]
+];
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const initials = n => n.split(" ").map(w=>w[0]).join("").slice(0,2);
+
+const elMembers=document.getElementById("members"); if(elMembers) elMembers.innerHTML = MEMBERS.map(m=>`
+  <li class="member"><span class="avatar">${m.photo?`<img src="${m.photo}" alt="${esc(m.n)}" width="400" height="400" loading="lazy" data-initials="${initials(m.n)}" onerror="photoFallback(this)">`:`<span class="mono" aria-hidden="true">${initials(m.n)}</span>`}</span>
+  <div><h3>${esc(m.n)}</h3><p>${esc(m.r)}</p><p>${esc(m.e)}</p>${m.m?`<a class="mail" href="mailto:${m.m}">${m.m}</a>`:""}</div></li>`).join("");
+
+const elTerms=document.getElementById("terms"); if(elTerms) elTerms.innerHTML = TERMS.map(t=>`
+  <div class="term${t.past?" past-t":""}"><h3>${t.t}</h3><ul>${t.c.map(([a,b])=>`<li><code>${esc(a)}</code>${esc(b)}</li>`).join("")}</ul></div>`).join("");
+
+function renderPubs(q){
+  q = (q||"").trim().toLowerCase();
+  const list = PUBS.filter(p => !q || (p[1]+" "+p[2]+" "+p[3]+" "+p[4]).toLowerCase().includes(q));
+  const years = [...new Set(list.map(p=>p[4]))];
+  const out = years.map(y=>`
+    <div class="year-group"><div class="year">${y}</div><ol class="pubs">${
+      list.filter(p=>p[4]===y).map(p=>`
+      <li class="pub"><span class="n">${p[0]}</span><div>
+        <p class="t"><a href="${p[5]}" target="_blank" rel="noopener">${esc(p[1])}</a></p>
+        <p class="au">${esc(p[2]).replace(PI,"<b>"+PI+"</b>")}</p>
+        <p class="j"><i>${esc(p[3])}</i></p>
+      </div></li>`).join("")
+    }</ol></div>`).join("");
+  document.getElementById("pubList").innerHTML = out || `<p class="empty">No publications match “${esc(q)}”. Try an author surname or a journal name.</p>`;
+  document.getElementById("pubCount").textContent = list.length===PUBS.length ? `${PUBS.length} publications` : `${list.length} of ${PUBS.length} publications`;
+}
+if(document.getElementById("pubList")){ renderPubs(""); document.getElementById("pubSearch").addEventListener("input", e=>renderPubs(e.target.value)); }
+
+const root = document.documentElement;
+try{ const s = localStorage.getItem("bbl-theme"); if(s) root.dataset.theme = s; }catch(e){}
+document.getElementById("themeBtn").addEventListener("click", ()=>{
+  const dark = root.dataset.theme ? root.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try{ localStorage.setItem("bbl-theme", root.dataset.theme); }catch(e){}
+  if(window.__bblReadColors) window.__bblReadColors();
+});
+
+/* ---------- Pages: each nav item shows its own page (hash routing when all pages are in one file) ---------- */
+const links=[...document.querySelectorAll("#navlinks a")], pages=[...document.querySelectorAll("[data-page]")];
+const pageOf=h=>{ if(pages.some(p=>p.dataset.page===h)) return h; return "home"; };
+function route(){
+  const h=(location.hash||"#home").slice(1), name=pages.length>1?pageOf(h):(pages[0]?pages[0].dataset.page:"home");
+  if(pages.length>1) pages.forEach(p=>p.hidden=p.dataset.page!==name);
+  links.forEach(l=>l.classList.toggle("on", l.dataset.nav===name));
+  const onL=links.find(l=>l.classList.contains("on")); if(onL){ const ul=onL.closest("ul"); if(ul.scrollWidth>ul.clientWidth) ul.scrollLeft=onL.offsetLeft-ul.offsetLeft-ul.clientWidth/2+onL.clientWidth/2; }
+  const titles={home:"",research:"Research",team:"Team",publications:"Publications",teaching:"Teaching",join:"Join us"};
+  document.title=(titles[name]?titles[name]+" | ":"")+"Biophysics & Biofluids Lab | IIT Kharagpur";
+  if(pages.length>1){
+    if(h==="contact"){ const el=document.getElementById(h); requestAnimationFrame(()=>el&&el.scrollIntoView()); }
+    else window.scrollTo(0,0);
+  }
+  if(window.BBL) requestAnimationFrame(()=>BBL.sims.forEach(s=>s.resize(false)));
+}
+addEventListener("hashchange",route); route();
+
+/* ================= Movies: shared runner ================= */
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const BBL = { playing: !REDUCE, sims: [], C: {} }; window.BBL = BBL;
+function readTheme(){
+  const cs=getComputedStyle(document.documentElement), v=(n,d)=>cs.getPropertyValue(n).trim()||d;
+  BBL.C={bg:v("--paper-2","#F3E9F0"), paper:v("--paper","#FBF7F9"), cell:v("--cell","#F2B8CC"), mem:v("--membrane","#B8456F"),
+    nuc:v("--nucleus","#4A3388"), ink:v("--ink","#231A3B"), hema:v("--hema","#5B3F9E"), eos:v("--eosin","#E07AA0"), eosd:v("--eosin-deep","#B8456F")};
+  const pc=BBL.C.paper.replace("#",""); BBL.C.dark=pc.length===6 && (parseInt(pc.slice(0,2),16)+parseInt(pc.slice(2,4),16)+parseInt(pc.slice(4,6),16))<380;
+}
+const gauss=()=>Math.sqrt(-2*Math.log(Math.random()+1e-12))*Math.cos(2*Math.PI*Math.random());
+const clamp01=x=>Math.max(0,Math.min(1,x)), lerp=(a,b,u)=>a+(b-a)*u, ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+
+function makeSim(cv, impl){
+  const sim={cv, ctx:cv.getContext("2d"), W:0, H:0, dpr:1, running:false, visible:true, last:0, ptr:{x:-1e4,y:-1e4,vx:0,vy:0,on:false,t:0}};
+  function draw(){ sim.ctx.setTransform(sim.dpr,0,0,sim.dpr,0,0); impl.draw(sim, BBL.C); }
+  sim.draw=draw;
+  sim.resize=function(force){
+    const r=cv.getBoundingClientRect(), W=Math.max(40,r.width), H=Math.max(40,r.height);
+    if(!force && Math.abs(W-sim.W)<2 && Math.abs(H-sim.H)<2) return;
+    sim.dpr=Math.min(devicePixelRatio||1,2); sim.W=W; sim.H=H;
+    cv.width=Math.round(W*sim.dpr); cv.height=Math.round(H*sim.dpr);
+    impl.setup(sim); draw();
+  };
+  function loop(now){
+    if(!sim.running) return;
+    const dt=Math.min(.033,Math.max(.001,(now-sim.last)/1000)); sim.last=now;
+    try{ impl.step(sim,dt); draw(); }catch(e){ console.error(e); sim.running=false; return; }
+    requestAnimationFrame(loop);
+  }
+  sim.start=()=>{ if(!BBL.playing||sim.running||!sim.visible||document.hidden) return; sim.running=true; sim.last=performance.now(); requestAnimationFrame(loop); };
+  sim.stop=()=>{ sim.running=false; };
+  new IntersectionObserver(es=>{ sim.visible=es[0].isIntersecting; sim.visible?sim.start():sim.stop(); }).observe(cv);
+  if(impl.pointer){
+    const move=e=>{ const r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,now=performance.now(),p=sim.ptr;
+      if(p.on){ const dt=Math.max(8,now-p.t)/1000; p.vx=Math.max(-600,Math.min(600,(x-p.x)/dt*.35)); p.vy=Math.max(-600,Math.min(600,(y-p.y)/dt*.35)); }
+      p.x=x;p.y=y;p.t=now;p.on=true; };
+    cv.addEventListener("pointermove",move);
+    cv.addEventListener("pointerdown",e=>{ sim.ptr.on=false; move(e); });
+    cv.addEventListener("pointerleave",()=>{ sim.ptr.on=false; });
+  }
+  BBL.sims.push(sim);
+  return sim;
+}
+
+/* ================= 1. Tissue flow: self-propelled Voronoi monolayer ================= */
+const TissueSim={
+  pointer:true,
+  setup(s){
+    const N=s.N=Math.max(50,Math.min(200,Math.round(s.W*s.H/2400)));
+    s.X=new Float64Array(N); s.Y=new Float64Array(N); s.TH=new Float64Array(N);
+    s.CX=new Float64Array(N); s.CY=new Float64Array(N); s.AR=new Float64Array(N); s.POLY=new Array(N);
+    for(let i=0;i<N;i++){ s.X[i]=Math.random()*s.W; s.Y[i]=Math.random()*s.H; s.TH[i]=Math.random()*6.283; }
+    for(let k=0;k<30;k++) this.advance(s,1/30,true);
+  },
+  clip(poly,ax,ay,bx,by){
+    const nx=bx-ax,ny=by-ay,c=(nx*(ax+bx)+ny*(ay+by))/2,out=[],n=poly.length;
+    for(let k=0;k<n;k++){ const p=poly[k],q=poly[(k+1)%n],sp=nx*p[0]+ny*p[1]-c,sq=nx*q[0]+ny*q[1]-c;
+      if(sp<=0) out.push(p);
+      if((sp<0&&sq>0)||(sp>0&&sq<0)){ const t=sp/(sp-sq); out.push([p[0]+t*(q[0]-p[0]),p[1]+t*(q[1]-p[1])]); } }
+    return out;
+  },
+  voronoi(s){
+    const {W,H,N,X,Y}=s, g=2.6*Math.sqrt(W*H/N), gw=Math.max(1,Math.ceil(W/g)), gh=Math.max(1,Math.ceil(H/g)), grid=Array.from({length:gw*gh},()=>[]);
+    const cell=i=>[Math.min(gw-1,Math.max(0,(X[i]/g)|0)),Math.min(gh-1,Math.max(0,(Y[i]/g)|0))];
+    for(let i=0;i<N;i++){ const [a,b]=cell(i); grid[b*gw+a].push(i); }
+    for(let i=0;i<N;i++){
+      let poly=[[0,0],[W,0],[W,H],[0,H]]; const [gx,gy]=cell(i);
+      for(let yy=gy-1;yy<=gy+1;yy++) for(let xx=gx-1;xx<=gx+1;xx++){
+        if(xx<0||yy<0||xx>=gw||yy>=gh) continue;
+        for(const j of grid[yy*gw+xx]) if(j!==i&&poly.length>2) poly=this.clip(poly,X[i],Y[i],X[j],Y[j]);
+      }
+      s.POLY[i]=poly; let a=0,cx=0,cy=0;
+      for(let k=0;k<poly.length;k++){ const p=poly[k],q=poly[(k+1)%poly.length],c=p[0]*q[1]-q[0]*p[1]; a+=c; cx+=(p[0]+q[0])*c; cy+=(p[1]+q[1])*c; }
+      a*=.5; if(Math.abs(a)<1e-6){s.CX[i]=X[i];s.CY[i]=Y[i];s.AR[i]=0;} else {s.CX[i]=cx/(6*a);s.CY[i]=cy/(6*a);s.AR[i]=Math.abs(a);}
+    }
+  },
+  advance(s,dt,quiet){
+    this.voronoi(s);
+    const {N,X,Y,TH,W,H,ptr}=s, v0=quiet?0:30, k=1.2, R=110, sq=Math.sqrt(2*.9*dt);
+    for(let i=0;i<N;i++){
+      let vx=k*(s.CX[i]-X[i])+v0*Math.cos(TH[i]), vy=k*(s.CY[i]-Y[i])+v0*Math.sin(TH[i]);
+      if(ptr.on){ const dx=X[i]-ptr.x,dy=Y[i]-ptr.y,d=Math.hypot(dx,dy); if(d<R){ const f=1-d/R; vx+=ptr.vx*f; vy+=ptr.vy*f; } }
+      X[i]+=vx*dt; Y[i]+=vy*dt;
+      if(X[i]<1){X[i]=1;TH[i]=Math.PI-TH[i];}else if(X[i]>W-1){X[i]=W-1;TH[i]=Math.PI-TH[i];}
+      if(Y[i]<1){Y[i]=1;TH[i]=-TH[i];}else if(Y[i]>H-1){Y[i]=H-1;TH[i]=-TH[i];}
+      TH[i]+=sq*gauss();
+    }
+    ptr.vx*=.92; ptr.vy*=.92;
+  },
+  step(s,dt){ this.advance(s,dt,false); },
+  draw(s,C){
+    const {ctx,W,H,N}=s; ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
+    const mean=W*H/N; ctx.lineJoin="round";
+    for(let i=0;i<N;i++){
+      const p=s.POLY[i]; if(!p||p.length<3) continue;
+      ctx.beginPath(); ctx.moveTo(p[0][0],p[0][1]); for(let j=1;j<p.length;j++) ctx.lineTo(p[j][0],p[j][1]); ctx.closePath();
+      ctx.globalAlpha=.35+.55*Math.min(1,s.AR[i]/mean); ctx.fillStyle=C.cell; ctx.fill();
+      ctx.globalAlpha=.85; ctx.strokeStyle=C.mem; ctx.lineWidth=1.3; ctx.stroke();
+    }
+    ctx.globalAlpha=.9; ctx.fillStyle=C.nuc;
+    for(let i=0;i<N;i++){ const r=Math.sqrt(s.AR[i]||mean)*.17; ctx.beginPath(); ctx.ellipse(s.CX[i],s.CY[i],r*1.25,r*.85,s.TH[i],0,6.283); ctx.fill(); }
+    ctx.globalAlpha=1;
+  }
+};
+
+/* ================= 2. Parasite invading a macrophage ================= */
+const ParasiteSim={
+  VW:400, VH:300, LOOP:15, bounds:[0,3.5,5,9,11.5,15], names:["Swim","Attach","Engulf","Transform","Replicate"],
+  M:{x:258,y:152,R:88}, V:{x:226,y:150},
+  setup(s){
+    if(s.t===undefined) s.t=REDUCE?10.5:.6;
+    const M=this.M; s.LYSO=Array.from({length:9},(_,i)=>{const a=i/9*6.283+.4, r=30+(i*37%40); return {x:M.x+r*Math.cos(a)*.95, y:M.y+r*Math.sin(a)*.8, r:2.6+(i%3)*.8};});
+    s.tag=document.getElementById("stageTag");
+  },
+  step(s,dt){ s.t=(s.t+dt)%this.LOOP; },
+  eng(T){ const e=clamp01((T-5)/4); return {e,u1:ease(clamp01(e/.45)),u2:ease(clamp01((e-.55)/.45)),cup:Math.sin(Math.PI*clamp01(e/.75)),close:ease(clamp01(e/.6))}; },
+  memR(th,T){
+    const M=this.M, g=(d,w)=>Math.exp(-(d*d)/(2*w*w)), d=Math.atan2(Math.sin(th-Math.PI),Math.cos(th-Math.PI));
+    let r=M.R*(1+.045*Math.sin(3*th+T*1.3)+.03*Math.sin(5*th-T*.9)+.02*Math.sin(2*th+T*.5));
+    if(T>=3.5&&T<5) r+=8*Math.sin(Math.PI*clamp01((T-3.5)/1.5))*g(d,.16);
+    if(T>=5&&T<9){ const E=this.eng(T), depth=24*E.u1*(1-E.u2), h=44*E.cup, off=.42-.34*E.close; r+=-depth*g(d,.17)+h*(g(d-off,.12)+g(d+off,.12)); }
+    return r;
+  },
+  parasite(T){
+    const M=this.M,V=this.V, restX=M.x-M.R-65, memX=M.x-M.R+6;
+    if(T<3.5){ const u=ease(T/3.5), P=[[-40,40],[40,10],[30,170],[restX,M.y]];
+      const B=(k,q)=>Math.pow(1-q,3)*P[0][k]+3*Math.pow(1-q,2)*q*P[1][k]+3*(1-q)*q*q*P[2][k]+q*q*q*P[3][k], q2=Math.min(1,u+.01);
+      return {x:B(0,u),y:B(1,u)+2*Math.sin(T*9),ang:u>.99?0:Math.atan2(B(1,q2)-B(1,u),B(0,q2)-B(0,u)),hl:17,hw:5,flag:48}; }
+    if(T<5) return {x:restX+1.2*Math.sin(T*20),y:M.y,ang:0,hl:17,hw:5,flag:48};
+    if(T<9){ const E=this.eng(T); return {x:E.e<.55?lerp(restX,memX,E.u1):lerp(memX,V.x,E.u2), y:E.e<.55?M.y:lerp(M.y,V.y,E.u2), ang:.15*E.u2,hl:17,hw:5,flag:lerp(48,9,ease(E.e))}; }
+    if(T<11.5){ const u=ease((T-9)/2.5); return {x:V.x,y:V.y,ang:.15+.9*u,hl:lerp(17,9,u),hw:lerp(5,7.5,u),flag:lerp(9,0,u)}; }
+    return {x:V.x,y:V.y,ang:1.05,hl:9,hw:7.5,flag:0};
+  },
+  bug(ctx,C,x,y,ang,hl,hw,flag,T,alpha){
+    ctx.save(); ctx.translate(x,y); ctx.rotate(ang); ctx.globalAlpha=alpha;
+    if(flag>1){ ctx.beginPath(); ctx.moveTo(hl-1,0); for(let q=0;q<=flag;q+=1.5){ ctx.lineTo(hl+q,5.5*(q/Math.max(flag,20))*Math.sin(.22*q-16*T)); }
+      ctx.lineWidth=1.8; ctx.lineCap="round"; ctx.strokeStyle=C.ink; ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(hl,0); ctx.bezierCurveTo(hl*.6,-hw*1.05,-hl*.5,-hw,-hl,0); ctx.bezierCurveTo(-hl*.5,hw,hl*.6,hw*1.05,hl,0); ctx.closePath();
+    ctx.fillStyle=C.hema; ctx.globalAlpha=alpha*.9; ctx.fill(); ctx.globalAlpha=alpha; ctx.lineWidth=1.2; ctx.strokeStyle=C.ink; ctx.stroke();
+    ctx.fillStyle=C.paper; ctx.globalAlpha=alpha*.85; ctx.beginPath(); ctx.ellipse(-hl*.1,0,Math.max(2.5,hw*.55),Math.max(2,hw*.45),0,0,6.283); ctx.fill();
+    ctx.fillStyle=C.ink; ctx.beginPath(); ctx.arc(hl*.5,0,1.6,0,6.283); ctx.fill(); ctx.restore(); ctx.globalAlpha=1;
+  },
+  draw(s,C){
+    const {ctx,W,H}=s, T=s.t, M=this.M, V=this.V;
+    ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
+    const sc=Math.min(W/this.VW,H/this.VH)*1.38; ctx.save(); ctx.translate(W/2-this.M.x*sc+30*sc,H/2-this.M.y*sc); ctx.scale(sc,sc);
+    const P=this.parasite(T), vr=T<7.2?0:T<11.5?lerp(0,25,ease(clamp01((T-7.2)/1.6))):lerp(25,32,ease(clamp01((T-11.5)/2.5)));
+    const under=T>=5&&T<9&&vr===0, vx=vr>0&&T<9?P.x:V.x, vy=vr>0&&T<9?P.y:V.y;
+    if(under) this.bug(ctx,C,P.x,P.y,P.ang,P.hl,P.hw,P.flag,T,1);
+    ctx.beginPath(); for(let i=0;i<=160;i++){ const th=i/160*6.283,r=this.memR(th,T),x=M.x+r*Math.cos(th),y=M.y+r*Math.sin(th)*.92; i?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+    ctx.closePath(); ctx.globalAlpha=.78; ctx.fillStyle=C.cell; ctx.fill(); ctx.globalAlpha=1; ctx.lineWidth=2.2; ctx.lineJoin="round"; ctx.strokeStyle=C.mem; ctx.stroke();
+    ctx.save(); ctx.translate(M.x+38,M.y+10); ctx.rotate(.5+.05*Math.sin(T*.6)); ctx.beginPath(); ctx.ellipse(0,0,30,20,0,0,6.283); ctx.globalAlpha=.85; ctx.fillStyle=C.nuc; ctx.fill(); ctx.restore(); ctx.globalAlpha=1;
+    if(vr>0){ ctx.beginPath(); ctx.ellipse(vx,vy,vr*1.08,vr,0,0,6.283); ctx.fillStyle=C.paper; ctx.globalAlpha=.88; ctx.fill(); ctx.globalAlpha=.75; ctx.lineWidth=1.4; ctx.strokeStyle=C.mem; ctx.stroke(); ctx.globalAlpha=1; }
+    const f=clamp01((T-9)/2.5);
+    s.LYSO.forEach((l,i)=>{ const a=Math.atan2(l.y-V.y,l.x-V.x), u=ease(clamp01(f*1.3-i*.03));
+      ctx.globalAlpha=(1-u*u)*.8; ctx.fillStyle=C.eosd; ctx.beginPath(); ctx.arc(lerp(l.x,V.x+27*Math.cos(a),u)+1.5*Math.sin(T*1.7+i),lerp(l.y,V.y+27*Math.sin(a),u)+1.5*Math.cos(T*1.3+i),l.r,0,6.283); ctx.fill(); });
+    ctx.globalAlpha=1;
+    if(!under){
+      if(T<11.5) this.bug(ctx,C,P.x,P.y,P.ang,P.hl,P.hw,P.flag,T,1);
+      else { const u=ease(clamp01((T-11.5)/2.2)), o=lerp(0,11,u), a=1.05, q=lerp(1,.88,u);
+        this.bug(ctx,C,V.x-o*Math.cos(a),V.y-o*Math.sin(a),a,9*q,7.5*q,0,T,1);
+        if(u>.01) this.bug(ctx,C,V.x+o*Math.cos(a),V.y+o*Math.sin(a),a+Math.PI,9*q,7.5*q,0,T,Math.min(1,u*4)); }
+    }
+    ctx.restore();
+    const fade=T>14.4?(T-14.4)/.6:T<.4?1-T/.4:0;
+    if(fade>0){ ctx.globalAlpha=fade; ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H); ctx.globalAlpha=1; }
+    if(s.tag){ let k=0; while(k<4&&T>=this.bounds[k+1]) k++; const txt=(k+1)+" of 5: "+this.names[k]; if(s.tag.textContent!==txt) s.tag.textContent=txt; }
+  }
+};
+
+/* ================= 3. Deformable cells flowing through a microfluidic constriction ================= */
+/* Each cell is an area-preserving deformable ellipse (drop-like model): it is stretched by the local
+   velocity gradient, relaxes elastically back to round, and is squeezed by the channel walls. */
+const ChannelSim={
+  TAU:.16, MAXASP:2.2,
+  geo(s){ const {W,H}=s; Object.assign(s,{y0:H/2, H0:.34*H, hc:.12*H, xc:.56*W, Lc:.15*W, U0:W/4.6}); s.Q=2*s.H0*s.U0; },
+  h(s,x){ const q=(x-s.xc)/s.Lc; return s.H0-(s.H0-s.hc)*Math.exp(-q*q); },
+  dh(s,x){ const q=(x-s.xc)/s.Lc; return (s.H0-s.hc)*Math.exp(-q*q)*2*q/s.Lc; },
+  vel(s,x,y){ const h=this.h(s,x), e=Math.max(-1,Math.min(1,(y-s.y0)/h)), ux=.75*s.Q/h*(1-e*e); return [ux, ux*e*this.dh(s,x)]; },
+  spawn(s,x){
+    const r=s.H*(.066+.016*Math.random()), lim=s.H0-r*1.3, y=s.y0+(Math.random()*2-1)*lim*.75;
+    s.cells.push({x, y, r, a:r*r, b:0, d:r*r, ph:Math.random()*6.283});
+  },
+  setup(s){
+    this.geo(s); s.cells=[]; s.t=0; s.gap=undefined;
+    for(let x=s.W-10;x>-30;x-=s.H*.21*(.85+.4*Math.random())) this.spawn(s,x);
+    for(let k=0;k<(REDUCE?400:200);k++) this.sub(s,1/120);
+  },
+  eig(c){ const tr=(c.a+c.d)/2, q=Math.sqrt(Math.max(0,((c.a-c.d)/2)**2+c.b*c.b)); return [tr+q, Math.max(1e-6,tr-q), .5*Math.atan2(2*c.b,c.a-c.d)]; },
+  sub(s,dt){
+    const e=2;
+    for(const c of s.cells){
+      const u=this.vel(s,c.x,c.y), ux1=this.vel(s,c.x+e,c.y), ux0=this.vel(s,c.x-e,c.y), uy1=this.vel(s,c.x,c.y+e), uy0=this.vel(s,c.x,c.y-e);
+      const l11=(ux1[0]-ux0[0])/(2*e), l12=(uy1[0]-uy0[0])/(2*e), l21=(ux1[1]-ux0[1])/(2*e), l22=(uy1[1]-uy0[1])/(2*e);
+      const r2=c.r*c.r, {a,b,d}=c;
+      c.a+=dt*(2*(l11*a+l12*b)-(a-r2)/this.TAU);
+      c.b+=dt*((l11+l22)*b+l12*d+l21*a-b/this.TAU);
+      c.d+=dt*(2*(l21*b+l22*d)-(d-r2)/this.TAU);
+      let det=c.a*c.d-c.b*c.b; if(det<=1e-9){ c.a=r2;c.b=0;c.d=r2; det=r2*r2; }
+      let k=r2/Math.sqrt(det); c.a*=k; c.b*=k; c.d*=k;                     // keep area
+      const [L1,L2]=this.eig(c); if(L1/L2>this.MAXASP*this.MAXASP){ const w=.15; c.a=lerp(c.a,r2,w); c.b*=1-w; c.d=lerp(c.d,r2,w); }
+      c.x+=u[0]*dt; c.y+=u[1]*dt;
+      /* walls: squeeze the cell vertically (area-preserving) and keep it off the wall */
+      const hw=this.h(s,c.x)-1.5, eta=c.y-s.y0, ey=Math.sqrt(c.d), room=hw-Math.abs(eta);
+      if(room<ey){
+        const minE=.62*c.r;
+        if(room<minE){ const shift=minE-room; c.y-=Math.sign(eta||1)*Math.min(shift,Math.abs(eta)); }
+        const room2=Math.max(minE,hw-Math.abs(c.y-s.y0)), q=Math.min(1,room2/ey); c.a/=q*q; c.d*=q*q;
+      }
+    }
+    /* neighbouring cells do not overlap */
+    const C=s.cells;
+    for(let i=0;i<C.length;i++) for(let j=i+1;j<C.length;j++){
+      const A=C[i],B=C[j], dx=B.x-A.x, dy=B.y-A.y, dist=Math.hypot(dx,dy)||1e-6, m=(A.r+B.r)*.98;
+      if(dist<m){ const p=(m-dist)/dist*.5; A.x-=dx*p; A.y-=dy*p; B.x+=dx*p; B.y+=dy*p; }
+    }
+    s.cells=s.cells.filter(c=>c.x<s.W+c.r*2.5);
+    const lead=s.cells.reduce((m,c)=>Math.min(m,c.x-c.r),1e9);
+    if(s.gap===undefined) s.gap=s.H*(.03+.1*Math.random());
+    if(lead>s.gap){ this.spawn(s,-s.H*.09); s.gap=s.H*(.03+.1*Math.random()); }
+  },
+  step(s,dt){ s.t+=dt; const k=Math.max(1,Math.round(dt*120)); for(let i=0;i<k;i++) this.sub(s,dt/k); },
+  draw(s,C){
+    const {ctx,W,H}=s;
+    ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
+    const top=[],bot=[]; for(let x=0;x<=W;x+=4){ const h=this.h(s,x); top.push([x,s.y0-h]); bot.push([x,s.y0+h]); }
+    ctx.beginPath(); top.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])); for(let i=bot.length-1;i>=0;i--) ctx.lineTo(bot[i][0],bot[i][1]); ctx.closePath();
+    ctx.fillStyle=C.bg; ctx.fill();
+    ctx.lineWidth=1.6; ctx.strokeStyle=C.mem;
+    ctx.beginPath(); top.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])); ctx.stroke();
+    ctx.beginPath(); bot.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])); ctx.stroke();
+    ctx.save(); ctx.setLineDash([5,9]); ctx.lineDashOffset=-s.t*s.U0*.9; ctx.globalAlpha=.35; ctx.lineWidth=1;
+    for(const e of [-.7,-.35,0,.35,.7]){ ctx.beginPath(); for(let x=0;x<=W;x+=4){ const y=s.y0+e*this.h(s,x); x?ctx.lineTo(x,y):ctx.moveTo(x,y); } ctx.stroke(); }
+    ctx.restore();
+    for(const c of s.cells){
+      const [L1,L2,th]=this.eig(c), A1=Math.sqrt(L1), A2=Math.sqrt(L2), co=Math.cos(th), si=Math.sin(th);
+      ctx.beginPath();
+      for(let k=0;k<=48;k++){ const f=k/48*6.283, w=1+.025*Math.sin(3*f+c.ph+s.t*.8)+.015*Math.sin(5*f-c.ph);
+        const ex=A1*w*Math.cos(f), ey=A2*w*Math.sin(f), x=c.x+ex*co-ey*si, y=c.y+ex*si+ey*co; k?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+      ctx.closePath(); ctx.fillStyle="#fc8d59"; ctx.globalAlpha=.92; ctx.fill(); ctx.globalAlpha=1; ctx.lineWidth=1.6; ctx.lineJoin="round"; ctx.strokeStyle="#d73027"; ctx.stroke();
+      const rn=.4*c.r, asp=Math.pow(A1/A2,.3);
+      ctx.beginPath(); ctx.ellipse(c.x,c.y,Math.min(rn*asp,.6*A1),Math.min(rn/asp,.6*A2),th,0,6.283); ctx.fillStyle="#d73027"; ctx.globalAlpha=.9; ctx.fill(); ctx.globalAlpha=1;
+    }
+  }
+};
+
+/* ================= 4. Motility-induced phase separation ================= */
+const MipsSim={
+  a:4.2, rs:16, nc:8, v0:80, Dr:.15, K:110, SUB:3, PERIOD:20,
+  setup(s){
+    const {W,H}=s, a=this.a, N=s.N=Math.round(.36*W*H/(Math.PI*a*a));
+    s.X=new Float64Array(N); s.Y=new Float64Array(N); s.TH=new Float64Array(N); s.n=new Uint8Array(N);
+    s.FX=new Float64Array(N); s.FY=new Float64Array(N); s.fadeIn=s.started===true; s.started=true; s.time=0;
+    s.gw=Math.max(1,Math.floor(W/this.rs)); s.gh=Math.max(1,Math.floor(H/this.rs)); s.head=new Int32Array(s.gw*s.gh); s.next=new Int32Array(N);
+    /* start mid-way through phase separation: seed a few packed clusters in a dilute gas */
+    const nDense=Math.round(N*.68), cellA=Math.PI*a*a/.8, nc=2+Math.floor(Math.random()*3), share=[];
+    for(let k=0;k<nc;k++) share.push(.5+Math.random()); const tot=share.reduce((x,y)=>x+y,0);
+    const blobs=share.map(w=>{ const m=Math.round(nDense*w/tot); return {m, r:Math.sqrt(m*cellA/Math.PI), x:Math.random()*W, y:Math.random()*H}; });
+    let i=0; const d=2*a*1.02;
+    for(const B of blobs){
+      const pts=[]; for(let gy=-B.r;gy<=B.r;gy+=d*.866) for(let gx=-B.r;gx<=B.r;gx+=d){ const ox=gx+((Math.round(gy/(d*.866))&1)?d/2:0);
+        const wob=1+.18*Math.sin(Math.atan2(gy,ox)*3+B.x); if(ox*ox+gy*gy<=B.r*B.r*wob*wob) pts.push([ox,gy]); }
+      pts.sort((p,q)=>(p[0]*p[0]+p[1]*p[1])-(q[0]*q[0]+q[1]*q[1]));
+      for(let k=0;k<Math.min(B.m,pts.length)&&i<N;k++,i++){ s.X[i]=((B.x+pts[k][0])%W+W)%W; s.Y[i]=((B.y+pts[k][1])%H+H)%H; }
+    }
+    const inBlob=(x,y)=>blobs.some(B=>{ let dx=Math.abs(x-B.x), dy=Math.abs(y-B.y); dx=Math.min(dx,W-dx); dy=Math.min(dy,H-dy); return dx*dx+dy*dy<(B.r*1.25)**2; });
+    for(;i<N;i++){ let x,y,t=0; do{ x=Math.random()*W; y=Math.random()*H; t++; }while(inBlob(x,y)&&t<30); s.X[i]=x; s.Y[i]=y; }
+    for(let k=0;k<N;k++) s.TH[k]=Math.random()*6.283;
+    for(let k=0;k<(REDUCE?600:60);k++) this.advance(s,1/180);
+  },
+  advance(s,dt){
+    const {W,H,N,X,Y,TH,n,FX,FY,gw,gh,head,next}=s, a2=2*this.a, rs2=this.rs*this.rs, cw=W/gw, ch=H/gh;
+    head.fill(-1);
+    for(let i=0;i<N;i++){ const gx=Math.min(gw-1,(X[i]/cw)|0), gy=Math.min(gh-1,(Y[i]/ch)|0), c=gy*gw+gx; next[i]=head[c]; head[c]=i; }
+    n.fill(0); FX.fill(0); FY.fill(0);
+    for(let gy=0;gy<gh;gy++) for(let gx=0;gx<gw;gx++){
+      for(let i=head[gy*gw+gx];i>=0;i=next[i]){
+        for(let oy=-1;oy<=1;oy++) for(let ox=-1;ox<=1;ox++){
+          const cx=(gx+ox+gw)%gw, cy=(gy+oy+gh)%gh;
+          for(let j=head[cy*gw+cx];j>=0;j=next[j]){ if(j<=i) continue;
+            let dx=X[j]-X[i], dy=Y[j]-Y[i]; if(dx>W/2)dx-=W; else if(dx<-W/2)dx+=W; if(dy>H/2)dy-=H; else if(dy<-H/2)dy+=H;
+            const d2=dx*dx+dy*dy; if(d2>rs2) continue;
+            if(n[i]<255)n[i]++; if(n[j]<255)n[j]++;
+            if(d2<a2*a2){ const d=Math.sqrt(d2)||1e-6, f=this.K*(a2-d)/d; FX[i]-=f*dx; FY[i]-=f*dy; FX[j]+=f*dx; FY[j]+=f*dy; }
+          } } } }
+    const sq=Math.sqrt(2*this.Dr*dt);
+    for(let i=0;i<N;i++){
+      const v=this.v0*(.03+.97/(1+Math.exp((n[i]-this.nc)/1.1)));
+      X[i]+=(v*Math.cos(TH[i])+FX[i])*dt; Y[i]+=(v*Math.sin(TH[i])+FY[i])*dt;
+      if(X[i]<0)X[i]+=W; else if(X[i]>=W)X[i]-=W; if(Y[i]<0)Y[i]+=H; else if(Y[i]>=H)Y[i]-=H;
+      TH[i]+=sq*gauss();
+    }
+  },
+  step(s,dt){
+    for(let k=0;k<this.SUB;k++) this.advance(s,dt/this.SUB); s.time+=dt; if(s.time>this.PERIOD){ this.setup(s); } },
+  draw(s,C){
+    const {ctx,W,H,N,X,Y,n}=s, a=this.a, th=this.nc+1.5;
+    ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
+    const gas=new Path2D(), dense=new Path2D();
+    for(let i=0;i<N;i++){ const p=n[i]>=th?dense:gas; p.moveTo(X[i]+a,Y[i]); p.arc(X[i],Y[i],a,0,6.283); }
+    ctx.fillStyle="#c2a5cf"; ctx.fill(gas); ctx.fillStyle="#7b3294"; ctx.fill(dense);
+    const t=s.time, fade=(s.fadeIn&&t<.5)?1-t/.5:t>this.PERIOD-.6?(t-(this.PERIOD-.6))/.6:0;
+    if(fade>0){ ctx.globalAlpha=fade; ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H); ctx.globalAlpha=1; }
+  }
+};
+
+/* ================= Boot ================= */
+function bootMovies(){
+  readTheme();
+  [["tissue",TissueSim],["invasion",ParasiteSim],["channel",ChannelSim],["mips",MipsSim]].forEach(([id,impl])=>{
+    const cv=document.getElementById(id); if(!cv) return;
+    try{ const s=makeSim(cv,impl); s.resize(true); s.start(); }catch(e){ console.error("Movie failed:",id,e); }
+  });
+  const btn=document.getElementById("playAll"); if(!btn) return;
+  const label=()=>{ btn.textContent=BBL.playing?"Pause movies":"Play movies"; btn.setAttribute("aria-pressed",String(!BBL.playing)); };
+  btn.addEventListener("click",()=>{ BBL.playing=!BBL.playing; BBL.sims.forEach(s=>BBL.playing?s.start():s.stop()); label(); }); label();
+  document.addEventListener("visibilitychange",()=>BBL.sims.forEach(s=>document.hidden?s.stop():s.start()));
+  let rz; addEventListener("resize",()=>{ clearTimeout(rz); rz=setTimeout(()=>BBL.sims.forEach(s=>s.resize(false)),200); });
+  window.__bblReadColors=()=>{ readTheme(); BBL.sims.forEach(s=>s.draw()); };
+}
+if(document.readyState==="complete") bootMovies(); else addEventListener("load",bootMovies);
+</script>
+</body>
+</html>
