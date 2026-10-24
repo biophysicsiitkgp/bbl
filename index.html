@@ -460,7 +460,7 @@ const TissueSim={
       ctx.globalAlpha=.35+.55*Math.min(1,s.AR[i]/mean); ctx.fillStyle=C.cell; ctx.fill();
       ctx.globalAlpha=.85; ctx.strokeStyle=C.mem; ctx.lineWidth=1.3; ctx.stroke();
     }
-    ctx.globalAlpha=.9; ctx.fillStyle=C.nuc;
+    ctx.globalAlpha=.95; ctx.fillStyle="#9064a4";
     for(let i=0;i<N;i++){ const r=Math.sqrt(s.AR[i]||mean)*.17; ctx.beginPath(); ctx.ellipse(s.CX[i],s.CY[i],r*1.25,r*.85,s.TH[i],0,6.283); ctx.fill(); }
     ctx.globalAlpha=1;
   }
